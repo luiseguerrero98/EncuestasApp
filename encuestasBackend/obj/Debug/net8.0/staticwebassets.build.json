@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "daG1MsBQDmKAUh0riPpUdP5jLcjdzd48X4c0lRhReg8=",
+  "Source": "encuestasBackend",
+  "BasePath": "_content/encuestasBackend",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
