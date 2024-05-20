@@ -27,5 +27,31 @@ namespace encuestasBackend.Services
             _context.EncuestaCampos.Add(campo);
             await _context.SaveChangesAsync();
         }
+
+        public async Task UpdateEncuestaCampos(int idEncuesta, Encuesta encuesta) {
+
+            var listaEncuestaCamposDb = await _context.EncuestaCampos.Where(e => e.IdEncuesta == idEncuesta).ToListAsync();
+
+            foreach(var campo in listaEncuestaCamposDb) {
+                var campoExistente = encuesta.EncuestaCampos.FirstOrDefault(e => e.IdEncuestaCampo == campo.IdEncuestaCampo);
+                if (campoExistente == null) {
+                    _context.EncuestaCampos.Remove(campo);
+                }
+            }
+
+            foreach (var campoActualizado in encuesta.EncuestaCampos) {
+                var campoExistente = await _context.EncuestaCampos.FindAsync(campoActualizado.IdEncuestaCampo);
+
+                if (campoExistente != null) {
+                    campoExistente.nombre = campoActualizado.nombre;
+                    campoExistente.requerido = campoActualizado.requerido;
+                    campoExistente.titulo = campoActualizado.titulo;
+                } else {
+                    _context.EncuestaCampos.Add(campoActualizado);
+                }
+            }
+
+            await _context.SaveChangesAsync();
+        }
     }
 }

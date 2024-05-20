@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using encuestasBackend.Models;
-using System.Collections.Generic;
-using System.Linq;
+// using System.Collections.Generic;
+// using System.Linq;
 
 namespace encuestasBackend.Services
 {
@@ -37,6 +37,23 @@ namespace encuestasBackend.Services
             _context.Encuestas.Remove(encuesta);
             await _context.SaveChangesAsync();
             return true;
+        }
+
+        public async Task<Encuesta> UpdateEncuesta(int id, Encuesta encuesta)
+        {
+            var encuestaExistente =  await _context.Encuestas.FindAsync(id);
+
+            if (encuestaExistente == null) 
+            {   
+                return null;
+            }
+
+            encuestaExistente.nombreEncuesta = encuesta.nombreEncuesta;
+            encuestaExistente.descripcion = encuesta.descripcion;
+
+            await _context.SaveChangesAsync();
+
+            return encuestaExistente;
         }
 
 

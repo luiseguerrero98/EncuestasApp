@@ -60,5 +60,23 @@ namespace encuestasBackend.Controllers
             }
             return NoContent();
         }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateEncuesta(int id, [FromBody] Encuesta encuesta) {
+            
+            if (!ModelState.IsValid) {
+                return BadRequest(ModelState);
+            }
+
+            var result = await _encuestaService.UpdateEncuesta(id,encuesta);
+
+            if (result == null) {
+                return NotFound();
+            }
+
+            await _encuestaCampoService.UpdateEncuestaCampos(id, encuesta);
+
+            return Ok(result);
+        }
     }
 }
