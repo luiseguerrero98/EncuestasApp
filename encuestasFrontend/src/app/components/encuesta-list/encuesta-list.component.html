@@ -1,0 +1,11 @@
+<div class="container">
+    <h1>Encuestas</h1>
+    <button (click)="navigateToCreate()">Crear Nueva Encuesta</button>
+    <ul>
+      <li *ngFor="let encuesta of encuestas">
+        <a [routerLink]="['/encuestas', encuesta.idEncuesta]">{{ encuesta.nombreEncuesta }}</a>
+        <button (click)="navigateToEdit(encuesta.idEncuesta)">Editar</button>
+        <button (click)="deleteEncuesta(encuesta.idEncuesta)">Eliminar</button>
+      </li>
+    </ul>
+  </div>

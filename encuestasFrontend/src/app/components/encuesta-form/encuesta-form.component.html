@@ -1,0 +1,29 @@
+<div class="container">
+  <h1>{{ isEditMode ? 'Editar Encuesta' : 'Crear Encuesta' }}</h1>
+  <form [formGroup]="encuestaForm" (ngSubmit)="onSubmit()">
+    <label for="nombreEncuesta">Título:</label>
+    <input id="nombreEncuesta" formControlName="nombreEncuesta" type="text" />
+    
+    <label for="descripcion">Descripción:</label>
+    <input id="descripcion" formControlName="descripcion" type="text" />
+    
+    <div formArrayName="encuestaCampos">
+      <div *ngFor="let campo of encuestaCampos.controls; let i = index" [formGroupName]="i">
+        <h3>Campo</h3>
+        <label for="nombre">Nombre:</label>
+        <input id="nombre" formControlName="nombre" type="text" />
+        
+        <label for="titulo">Título:</label>
+        <input id="titulo" formControlName="titulo" type="text" /> 
+        
+        <label for="requerido">Requerido:</label>
+        <input id="requerido" formControlName="requerido" type="checkbox" />
+        
+        <button (click)="removeCampo(i)">Eliminar Campo</button>
+      </div>
+    </div>
+    
+    <button type="button" (click)="addCampo()">Agregar Campo</button>
+    <button type="submit">{{ isEditMode ? 'Actualizar Encuesta' : 'Crear Encuesta' }}</button>
+  </form>
+</div>

@@ -28,6 +28,15 @@ namespace encuestasBackend.Controllers
             return Ok(encuestas);
         }
 
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetEncuesta(int id){
+            var encuesta = await _encuestaService.GetEncuesta(id);
+            if (encuesta == null) {
+                return NotFound();
+            }
+            return Ok(encuesta);
+        }
+
         [HttpPost] 
         public async Task<IActionResult> CrearEncuesta([FromBody] Encuesta encuesta)
         {

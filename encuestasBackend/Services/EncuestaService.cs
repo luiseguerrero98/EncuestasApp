@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using encuestasBackend.Models;
+using encuestasBackend.Controllers;
 // using System.Collections.Generic;
 // using System.Linq;
 
@@ -16,6 +17,11 @@ namespace encuestasBackend.Services
         public List<Encuesta> GetEncuestasConCampos() 
         {
             return _context.Encuestas.Include(f => f.EncuestaCampos).ToList();
+        }
+
+        public async Task<Encuesta> GetEncuesta(int id) {
+            return await _context.Encuestas.Include(e => e.EncuestaCampos).FirstOrDefaultAsync(e => e.IdEncuesta == id);
+
         }
 
         public async Task CrearEncuesta(Encuesta encuesta)
