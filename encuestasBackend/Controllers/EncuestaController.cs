@@ -36,16 +36,29 @@ namespace encuestasBackend.Controllers
                 return BadRequest(ModelState);
             }
 
-            var idEncuesta = await _encuestaService.CrearEncuesta(encuesta);
+            //var idEncuesta = 
+            await _encuestaService.CrearEncuesta(encuesta);
 
-            foreach (var campo in encuesta.EncuestaCampos)
-            {
-                //Console.WriteLine(campo);
-                campo.IdEncuesta = idEncuesta;
-                await _encuestaCampoService.AddEncuestaCampo(campo);
-            }
+            // foreach (var campo in encuesta.EncuestaCampos)
+            // {
+            //     //Console.WriteLine(campo);
+            //     campo.IdEncuesta = idEncuesta;
+            //     await _encuestaCampoService.AddEncuestaCampo(campo);
+            // }
 
             return Ok(encuesta);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteEncuesta(int id)
+        {
+            var result = await _encuestaService.DeleteEncuesta(id);
+
+            if (!result)
+            {
+                return NotFound();
+            }
+            return NoContent();
         }
     }
 }

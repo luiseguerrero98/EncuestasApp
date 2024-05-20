@@ -18,11 +18,25 @@ namespace encuestasBackend.Services
             return _context.Encuestas.Include(f => f.EncuestaCampos).ToList();
         }
 
-        public async Task<int> CrearEncuesta(Encuesta encuesta)
+        public async Task CrearEncuesta(Encuesta encuesta)
         {
             _context.Encuestas.Add(encuesta);
             await _context.SaveChangesAsync();
-            return encuesta.IdEncuesta;
+        }
+
+        public async Task<bool> DeleteEncuesta(int id)
+        {
+            var encuesta = await _context.Encuestas
+                            .Include(e => e.EncuestaCampos)
+                            .FirstOrDefaultAsync(e => e.IdEncuesta == id);
+
+            if (encuesta == null)
+            {
+                return false;
+            }
+            _context.Encuestas.Remove(encuesta);
+            await _context.SaveChangesAsync();
+            return true;
         }
 
 
